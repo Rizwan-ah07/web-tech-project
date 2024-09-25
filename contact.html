@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frosty Fragrances - Contact Us</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <section class="container-nav">
+        <a href="index.html" class="logo">
+          <img src="assets/images/frost-logo.webp" alt="Frosty Fragrances Logo">
+      </a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <section class="nav-bar"> </section>
+      </section>
+    </nav>
+    <form action="search.html" method="get" class="search-form">
+      <input type="text" name="query" placeholder="Search products...">
+      <button type="submit">Search</button>
+    </form>
+</header>
+
+  <main>
+
+    <section class="contact-form">
+      <h1>Contact Us</h1>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+  </main>
+  <section class="map-section">
+    <h2>Our Location</h2>
+    <div id="map"></div>
+  </section>
+
+  <footer>
+    &copy; 2024 Rizwan Hussain
+  </footer>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([51.2301671, 4.4161295], 13); 
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var icon = L.icon({
+      iconUrl: 'assets/images/frost-logo.webp', 
+      iconSize: [50, 50], 
+      iconAnchor: [25, 50]
+    });
+
+    L.marker([51.2301671, 4.4161295], { icon: icon }).addTo(map)
+      .openPopup();
+  </script>
+
+</body>
+</html>
