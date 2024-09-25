@@ -214,11 +214,8 @@ button:hover, .add-to-cart:hover, .wishlist-button:hover {
   margin: 0 auto;
 }
 
-@media screen and (max-width: 768px) {
-  *{
-    background-color: blueviolet;
-  }
-
+@media only screen and (max-width: 720px) {
+  /* stijlregels voor browserschermen > 720px en < 1024px */
   body{
     display: flex;
     flex-direction: column;
@@ -270,11 +267,13 @@ button:hover, .add-to-cart:hover, .wishlist-button:hover {
     align-items: center;
     align-content: center;
 }
+
   .products article{
     width: 100%;
   }
- 
 }
+
+
 
 /* Shop Overview Page */
 .shop-overview h1 {
