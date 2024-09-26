@@ -215,7 +215,6 @@ button:hover, .add-to-cart:hover, .wishlist-button:hover {
 }
 
 @media only screen and (max-width: 720px) {
-  /* stijlregels voor browserschermen > 720px en < 1024px */
   body{
     display: flex;
     flex-direction: column;
@@ -346,6 +345,16 @@ button:hover, .add-to-cart:hover, .wishlist-button:hover {
   background-color: #00838F;
 }
 
+button.add-to-wishlist.wishlisted {
+  background-color: #ff4081; /* Pink background */
+  color: white;
+}
+
+.add-to-wishlist.wishlisted {
+  background-color: #ff4081; 
+  color: white;
+}
+
 @media (max-width: 768px) {
   .product-grid .product-card {
     width: 100%;
@@ -360,6 +369,8 @@ button:hover, .add-to-cart:hover, .wishlist-button:hover {
     margin: 10px;
   }
 }
+
+
 
 /* Product Detail Page */
 .product-detail {
