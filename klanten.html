@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Frosty Fragrances - Klanten</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <section class="container-nav">
+        <a href="index.html" class="logo">
+          <img src="assets/images/frost-logo.webp" alt="Frosty Fragrances Logo">
+        </a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="klanten.html">Klanten</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <section class="nav-bar"></section>
+      </section>
+    </nav>
+    <form action="search.html" method="get" class="search-form">
+      <input type="text" name="query" placeholder="Search products...">
+      <button type="submit">Search</button>
+    </form>
+  </header>
+
+  <main>
+    <section class="customer-section">
+      <h1>Onze Klanten</h1>
+      <section class="customer-grid" id="customer-grid">
+
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Rizwan Hussain
+  </footer>
+
+  <script>
+
+    fetch('https://randomuser.me/api/?results=12')
+      .then(response => response.json())
+      .then(data => {
+        const customers = data.results;
+        const customerGrid = document.getElementById('customer-grid');
+
+        customers.forEach(customer => {
+          const customerCard = document.createElement('article');
+          customerCard.classList.add('customer-card');
+
+
+          const img = document.createElement('img');
+          img.src = customer.picture.large;
+          img.alt = `${customer.name.first} ${customer.name.last}`;
+          customerCard.appendChild(img);
+
+   
+          const name = document.createElement('h2');
+          name.textContent = `${customer.name.title} ${customer.name.first} ${customer.name.last}`;
+          customerCard.appendChild(name);
+
+
+          const country = document.createElement('p');
+          country.innerHTML = `<strong>Land:</strong> ${customer.location.country}`;
+          customerCard.appendChild(country);
+
+   
+          const email = document.createElement('p');
+          email.innerHTML = `<strong>Email:</strong> ${customer.email}`;
+          customerCard.appendChild(email);
+
+
+          customerGrid.appendChild(customerCard);
+        });
+      })
+      .catch(error => console.error('Error fetching customer data:', error));
+  </script>
+</body>
+</html>

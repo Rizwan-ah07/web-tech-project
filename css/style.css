@@ -485,6 +485,57 @@ footer {
   padding: 1rem;
 }
 
+/* Customer Section */
+.customer-section {
+  padding: 2rem;
+}
+
+.customer-section h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.customer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.customer-card {
+  background-color: #E0F7FA;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.customer-card:hover {
+  transform: translateY(-10px);
+}
+
+.customer-card img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.customer-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #00838F;
+}
+
+.customer-card p {
+  margin: 0.25rem 0;
+  color: #37474F;
+  font-size: 0.9rem;
+}
+
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   header nav ul {
