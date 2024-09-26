@@ -41,45 +41,6 @@
   <footer>
     &copy; 2024 Rizwan Hussain
   </footer>
-
-  <script>
-
-    fetch('https://randomuser.me/api/?results=12')
-      .then(response => response.json())
-      .then(data => {
-        const customers = data.results;
-        const customerGrid = document.getElementById('customer-grid');
-
-        customers.forEach(customer => {
-          const customerCard = document.createElement('article');
-          customerCard.classList.add('customer-card');
-
-
-          const img = document.createElement('img');
-          img.src = customer.picture.large;
-          img.alt = `${customer.name.first} ${customer.name.last}`;
-          customerCard.appendChild(img);
-
-   
-          const name = document.createElement('h2');
-          name.textContent = `${customer.name.title} ${customer.name.first} ${customer.name.last}`;
-          customerCard.appendChild(name);
-
-
-          const country = document.createElement('p');
-          country.innerHTML = `<strong>Land:</strong> ${customer.location.country}`;
-          customerCard.appendChild(country);
-
-   
-          const email = document.createElement('p');
-          email.innerHTML = `<strong>Email:</strong> ${customer.email}`;
-          customerCard.appendChild(email);
-
-
-          customerGrid.appendChild(customerCard);
-        });
-      })
-      .catch(error => console.error('Error fetching customer data:', error));
-  </script>
+<script src="js/script.js" defer></script>
 </body>
 </html>

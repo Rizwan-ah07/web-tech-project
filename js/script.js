@@ -157,24 +157,20 @@ const products = [
   }
 ];
 
-// Cart and wishlist data structures
 const cart = {};
 const wishlist = [];
-let totalPrice = 0; // Track total price
+let totalPrice = 0; 
 
-// Function to get the product by its name
 function getProductByName(productName) {
     return products.find(product => product.name === productName);
 }
 
-// Function to update the cart display
 function updateCartDisplay() {
     const cartItemsList = document.getElementById('cart-items');
     const totalPriceElement = document.getElementById('total-price');
 
-    cartItemsList.innerHTML = ''; // Clear the list
+    cartItemsList.innerHTML = ''; 
 
-    // Loop through the cart items and display them
     for (const productName in cart) {
         const product = getProductByName(productName);
         const quantity = cart[productName];
@@ -183,11 +179,9 @@ function updateCartDisplay() {
         cartItemsList.appendChild(listItem);
     }
 
-    // Update the total price display
     totalPriceElement.textContent = `Total: €${totalPrice.toFixed(2)}`;
 }
 
-// Add event listeners to "Add to Cart" buttons
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', function() {
         const productName = this.getAttribute('data-product-name');
@@ -198,22 +192,18 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
             return;
         }
 
-        // Add the product to the cart or increase its quantity
         if (cart[productName]) {
             cart[productName] += 1;
         } else {
             cart[productName] = 1;
         }
 
-        // Update the total price
         totalPrice += product.price;
 
-        // Update the cart display
         updateCartDisplay();
     });
 });
 
-// Add event listeners to "Add to Wishlist" buttons
 document.querySelectorAll('.add-to-wishlist').forEach(button => {
     button.addEventListener('click', function() {
         const productName = this.getAttribute('data-product-name');
@@ -226,7 +216,6 @@ document.querySelectorAll('.add-to-wishlist').forEach(button => {
 
         const index = wishlist.indexOf(productName);
 
-        // Toggle wishlist status
         if (index !== -1) {
             wishlist.splice(index, 1);
             this.classList.remove('wishlisted');
@@ -239,7 +228,7 @@ document.querySelectorAll('.add-to-wishlist').forEach(button => {
     });
 });
 
-// Load product details dynamically in product.html
+
 function loadProductDetails() {
     const queryParams = new URLSearchParams(window.location.search);
     const productName = queryParams.get('name');
@@ -257,7 +246,7 @@ function loadProductDetails() {
             document.querySelector('.product-features ul').innerHTML = product.features.map(feature => `<li>${feature}</li>`).join('');
             document.querySelector('#product-price').textContent = product.price.toFixed(2);
 
-            // Set data-product-name attribute to the buttons
+
             const addToCartButton = document.querySelector('.add-to-cart');
             const addToWishlistButton = document.querySelector('.add-to-wishlist');
             addToCartButton.setAttribute('data-product-name', product.name);
@@ -271,3 +260,74 @@ function loadProductDetails() {
 }
 
 document.addEventListener("DOMContentLoaded", loadProductDetails);
+
+// Klanten.html
+
+fetch('https://randomuser.me/api/?results=12')
+      .then(response => response.json())
+      .then(data => {
+        const customers = data.results;
+        const customerGrid = document.getElementById('customer-grid');
+
+        customers.forEach(customer => {
+          const customerCard = document.createElement('article');
+          customerCard.classList.add('customer-card');
+
+
+          const img = document.createElement('img');
+          img.src = customer.picture.large;
+          img.alt = `${customer.name.first} ${customer.name.last}`;
+          customerCard.appendChild(img);
+
+   
+          const name = document.createElement('h2');
+          name.textContent = `${customer.name.title} ${customer.name.first} ${customer.name.last}`;
+          customerCard.appendChild(name);
+
+
+          const country = document.createElement('p');
+          country.innerHTML = `<strong>Land:</strong> ${customer.location.country}`;
+          customerCard.appendChild(country);
+
+   
+          const email = document.createElement('p');
+          email.innerHTML = `<strong>Email:</strong> ${customer.email}`;
+          customerCard.appendChild(email);
+
+          const review = document.createElement('p');
+          review.classList.add('customer-review');
+          review.textContent = `"${getRandomReview()}"`;
+          customerCard.appendChild(review);
+
+
+          customerGrid.appendChild(customerCard);
+        });
+      })
+      .catch(error => console.error('Error fetching customer data:', error));
+
+      let reviews = [
+        "Ik heb onlangs een prachtige parfum gekocht en ben meer dan tevreden. De geur blijft de hele dag hangen, en ik krijg constant complimenten. Zeker de moeite waard!",
+        "Fantastische klantenservice! Mijn bestelling was verkeerd geleverd, maar ze hebben het binnen een dag opgelost en zelfs een extra tester erbij gedaan. Geweldige ervaring.",
+        "De verzending was supersnel en de producten kwamen in perfecte staat aan. De verpakking was stijlvol, en de parfum zelf is ongelooflijk fris en langdurig. Vijf sterren!",
+        "Deze winkel heeft het beste assortiment luxe geuren dat ik ooit heb gezien. Elke keer dat ik hier winkel, ontdek ik iets nieuws. Mijn favoriete geurwinkel!",
+        "Ik was op zoek naar een uniek cadeau voor mijn partner en deze winkel had precies wat ik zocht. Het product werd prachtig verpakt geleverd, en de geur was fantastisch!",
+        "Ik had nog nooit online parfum gekocht, maar dit was een geweldige ervaring. De gedetailleerde productbeschrijvingen en klantbeoordelingen hielpen me de perfecte geur te vinden.",
+        "Mijn bestelling kwam eerder aan dan verwacht, en de producten zijn van topkwaliteit. Ik ben onder de indruk van het assortiment en de gebruiksvriendelijke website.",
+        "Ik heb hier verschillende luxe geuren besteld en ze zijn allemaal fantastisch. De geuren zijn authentiek en de klantenservice was snel en behulpzaam bij het beantwoorden van mijn vragen.",
+        "Dit is mijn nieuwe favoriete winkel voor alles wat met geuren te maken heeft. De prijzen zijn concurrerend en de kwaliteit van de producten is onverslaanbaar.",
+        "Snelle levering en uitstekende service! Mijn product was mooi verpakt en de geur is precies zoals beschreven. Ik ben een tevreden klant!",
+        "De samples die ik kreeg bij mijn bestelling hielpen me om nieuwe geuren te ontdekken die ik anders misschien niet had geprobeerd. Ik kom zeker terug voor meer!",
+        "De geur blijft de hele dag hangen zonder overweldigend te zijn. Dit was mijn eerste aankoop bij deze winkel, maar zeker niet mijn laatste.",
+        "Ik was niet zeker van de juiste geur voor mij, maar de website heeft geweldige suggesties. Nu heb ik mijn nieuwe handtekeninggeur gevonden dankzij hun aanbevelingen.",
+        "Mijn ervaring met deze winkel was vlekkeloos. Ze bieden een breed scala aan producten, en de beschrijvingen zijn erg nauwkeurig. Ik ben erg blij met mijn aankoop.",
+        "Ik ben dol op de geur die ik heb gekocht! Het is precies wat ik zocht. De website was gemakkelijk te navigeren en het afrekenproces was probleemloos.",
+        "De klantenservice heeft mijn verwachtingen overtroffen. Ze hielpen me bij het kiezen van de perfecte geur voor een bruiloft. Geweldige ervaring!",
+        "De productkwaliteit is echt uitzonderlijk. Elke keer dat ik bestel, ontvang ik precies wat ik wil en soms zelfs meer, zoals gratis monsters of snelle levering.",
+        "Dit is de beste winkel voor luxe geuren die ik ooit heb gevonden. De prijzen zijn scherp, de verzending is snel en het assortiment is breed.",
+        "Mijn bestelling was perfect verpakt en de geur die ik kocht is van ongelooflijke kwaliteit. Ik kom hier zeker terug voor mijn volgende geur."
+    ];
+    
+    function getRandomReview() {
+        const randomIndex = Math.floor(Math.random() * reviews.length);
+        return reviews[randomIndex];
+    }
