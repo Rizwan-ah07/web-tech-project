@@ -214,7 +214,7 @@ button:hover, .add-to-cart:hover, .wishlist-button:hover {
   margin: 0 auto;
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 768px) {
   body{
     display: flex;
     flex-direction: column;
@@ -346,7 +346,7 @@ button:hover, .add-to-cart:hover, .wishlist-button:hover {
 }
 
 button.add-to-wishlist.wishlisted {
-  background-color: #ff4081; /* Pink background */
+  background-color: #ff4081; 
   color: white;
 }
 
@@ -367,6 +367,10 @@ button.add-to-wishlist.wishlisted {
 
   .shop-overview {
     margin: 10px;
+  }
+
+  .hero{
+    background-attachment: scroll;
   }
 }
 
