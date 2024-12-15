@@ -808,6 +808,14 @@ footer {
   color: red;
 }
 
+.social-icons{
+  margin: 10px;
+}
+
+#github{
+  margin: 19px;
+}
+
 @media (max-width: 768px) {
   .bookmark-qr {
     display: none;
