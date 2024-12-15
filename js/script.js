@@ -159,7 +159,7 @@ const products = [
 
 const cart = {};
 const wishlist = [];
-let totalPrice = 0; 
+let totalPrice = 0;
 
 function getProductByName(productName) {
     return products.find(product => product.name === productName);
@@ -169,21 +169,79 @@ function updateCartDisplay() {
     const cartItemsList = document.getElementById('cart-items');
     const totalPriceElement = document.getElementById('total-price');
 
-    cartItemsList.innerHTML = ''; 
+    cartItemsList.innerHTML = ''; // Clear existing items
 
     for (const productName in cart) {
         const product = getProductByName(productName);
         const quantity = cart[productName];
+
         const listItem = document.createElement('li');
-        listItem.textContent = `${productName} x ${quantity} (€${(product.price * quantity).toFixed(2)})`;
+
+        const productText = document.createElement('span');
+        productText.textContent = `${productName} (€${(product.price * quantity).toFixed(2)}) x `;
+
+        const quantityDropdown = document.createElement('select');
+        for (let i = 0; i <= 10; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            if (i === quantity) {
+                option.selected = true;
+            }
+            quantityDropdown.appendChild(option);
+        }
+
+        quantityDropdown.addEventListener('change', function () {
+            const newQuantity = parseInt(this.value, 10);
+
+            if (newQuantity === 0) {
+                delete cart[productName];
+            } else {
+                cart[productName] = newQuantity;
+            }
+
+            totalPrice = Object.entries(cart).reduce((total, [name, qty]) => {
+                const prod = getProductByName(name);
+                return total + prod.price * qty;
+            }, 0);
+
+            updateCartDisplay();
+        });
+
+        listItem.appendChild(productText);
+        listItem.appendChild(quantityDropdown);
         cartItemsList.appendChild(listItem);
     }
 
     totalPriceElement.textContent = `Total: €${totalPrice.toFixed(2)}`;
 }
 
+function showNotification(message, productImage) {
+    const notificationContainer = document.getElementById('notification-container');
+
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+
+    if (productImage) {
+        const img = document.createElement('img');
+        img.src = productImage;
+        img.alt = "Product image";
+        notification.appendChild(img);
+    }
+
+    const messageText = document.createElement('p');
+    messageText.textContent = message;
+    notification.appendChild(messageText);
+
+    notificationContainer.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
 document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         const productName = this.getAttribute('data-product-name');
         const product = getProductByName(productName);
 
@@ -201,11 +259,13 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
         totalPrice += product.price;
 
         updateCartDisplay();
+
+        showNotification(`${productName} has been added to the cart.`, product.image);
     });
 });
 
 document.querySelectorAll('.add-to-wishlist').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         const productName = this.getAttribute('data-product-name');
         const product = getProductByName(productName);
 
@@ -219,15 +279,14 @@ document.querySelectorAll('.add-to-wishlist').forEach(button => {
         if (index !== -1) {
             wishlist.splice(index, 1);
             this.classList.remove('wishlisted');
+            showNotification(`${productName} has been removed from the wishlist.`, product.image);
         } else {
             wishlist.push(productName);
             this.classList.add('wishlisted');
+            showNotification(`${productName} has been added to the wishlist.`, product.image);
         }
-
-        console.log('Current wishlist:', wishlist);
     });
 });
-
 
 function loadProductDetails() {
     const queryParams = new URLSearchParams(window.location.search);
@@ -239,13 +298,12 @@ function loadProductDetails() {
         if (product) {
             document.title = `Frosty Fragrances - ${product.name}`;
 
-            document.querySelector('h1').textContent = `${product.name} by Anfar`;
+            document.querySelector('h1').textContent = `${product.name}`;
             document.querySelector('figure img').src = product.image;
             document.querySelector('figure img').alt = product.alt;
             document.querySelector('figcaption').textContent = product.figcaption;
             document.querySelector('.product-features ul').innerHTML = product.features.map(feature => `<li>${feature}</li>`).join('');
             document.querySelector('#product-price').textContent = product.price.toFixed(2);
-
 
             const addToCartButton = document.querySelector('.add-to-cart');
             const addToWishlistButton = document.querySelector('.add-to-wishlist');
@@ -293,41 +351,27 @@ fetch('https://randomuser.me/api/?results=12')
           const email = document.createElement('p');
           email.innerHTML = `<strong>Email:</strong> ${customer.email}`;
           customerCard.appendChild(email);
-
-          const review = document.createElement('p');
-          review.classList.add('customer-review');
-          review.textContent = `"${getRandomReview()}"`;
-          customerCard.appendChild(review);
-
-
           customerGrid.appendChild(customerCard);
         });
       })
       .catch(error => console.error('Error fetching customer data:', error));
 
-      let reviews = [
-        "Ik heb onlangs een prachtige parfum gekocht en ben meer dan tevreden. De geur blijft de hele dag hangen, en ik krijg constant complimenten. Zeker de moeite waard!",
-        "Fantastische klantenservice! Mijn bestelling was verkeerd geleverd, maar ze hebben het binnen een dag opgelost en zelfs een extra tester erbij gedaan. Geweldige ervaring.",
-        "De verzending was supersnel en de producten kwamen in perfecte staat aan. De verpakking was stijlvol, en de parfum zelf is ongelooflijk fris en langdurig. Vijf sterren!",
-        "Deze winkel heeft het beste assortiment luxe geuren dat ik ooit heb gezien. Elke keer dat ik hier winkel, ontdek ik iets nieuws. Mijn favoriete geurwinkel!",
-        "Ik was op zoek naar een uniek cadeau voor mijn partner en deze winkel had precies wat ik zocht. Het product werd prachtig verpakt geleverd, en de geur was fantastisch!",
-        "Ik had nog nooit online parfum gekocht, maar dit was een geweldige ervaring. De gedetailleerde productbeschrijvingen en klantbeoordelingen hielpen me de perfecte geur te vinden.",
-        "Mijn bestelling kwam eerder aan dan verwacht, en de producten zijn van topkwaliteit. Ik ben onder de indruk van het assortiment en de gebruiksvriendelijke website.",
-        "Ik heb hier verschillende luxe geuren besteld en ze zijn allemaal fantastisch. De geuren zijn authentiek en de klantenservice was snel en behulpzaam bij het beantwoorden van mijn vragen.",
-        "Dit is mijn nieuwe favoriete winkel voor alles wat met geuren te maken heeft. De prijzen zijn concurrerend en de kwaliteit van de producten is onverslaanbaar.",
-        "Snelle levering en uitstekende service! Mijn product was mooi verpakt en de geur is precies zoals beschreven. Ik ben een tevreden klant!",
-        "De samples die ik kreeg bij mijn bestelling hielpen me om nieuwe geuren te ontdekken die ik anders misschien niet had geprobeerd. Ik kom zeker terug voor meer!",
-        "De geur blijft de hele dag hangen zonder overweldigend te zijn. Dit was mijn eerste aankoop bij deze winkel, maar zeker niet mijn laatste.",
-        "Ik was niet zeker van de juiste geur voor mij, maar de website heeft geweldige suggesties. Nu heb ik mijn nieuwe handtekeninggeur gevonden dankzij hun aanbevelingen.",
-        "Mijn ervaring met deze winkel was vlekkeloos. Ze bieden een breed scala aan producten, en de beschrijvingen zijn erg nauwkeurig. Ik ben erg blij met mijn aankoop.",
-        "Ik ben dol op de geur die ik heb gekocht! Het is precies wat ik zocht. De website was gemakkelijk te navigeren en het afrekenproces was probleemloos.",
-        "De klantenservice heeft mijn verwachtingen overtroffen. Ze hielpen me bij het kiezen van de perfecte geur voor een bruiloft. Geweldige ervaring!",
-        "De productkwaliteit is echt uitzonderlijk. Elke keer dat ik bestel, ontvang ik precies wat ik wil en soms zelfs meer, zoals gratis monsters of snelle levering.",
-        "Dit is de beste winkel voor luxe geuren die ik ooit heb gevonden. De prijzen zijn scherp, de verzending is snel en het assortiment is breed.",
-        "Mijn bestelling was perfect verpakt en de geur die ik kocht is van ongelooflijke kwaliteit. Ik kom hier zeker terug voor mijn volgende geur."
-    ];
-    
-    function getRandomReview() {
-        const randomIndex = Math.floor(Math.random() * reviews.length);
-        return reviews[randomIndex];
-    }
+
+      const qrCode = document.getElementById("qr-code");
+      const qrModal = document.getElementById("qr-modal");
+      const qrFullImage = document.getElementById("qr-full-image");
+      const qrClose = document.getElementById("qr-close");
+      
+      qrCode.addEventListener("click", () => {
+        qrModal.style.display = "flex"; // 
+      });
+      
+      qrClose.addEventListener("click", () => {
+        qrModal.style.display = "none";
+      });
+      
+      window.addEventListener("click", (e) => {
+        if (e.target === qrModal) {
+          qrModal.style.display = "none";
+        }
+      });

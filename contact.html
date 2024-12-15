@@ -16,12 +16,11 @@
         <a href="index.html" class="logo">
           <img src="assets/images/frost-logo.webp" alt="Frosty Fragrances Logo">
       </a>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="klanten.html">Klanten</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
 
         <section class="nav-bar"> </section>
       </section>
@@ -30,7 +29,16 @@
       <input type="text" name="query" placeholder="Search products...">
       <button type="submit">Search</button>
     </form>
+    <div class="bookmark-qr">
+      <img src="assets/images/QR-Code.png" alt="QR Code" id="qr-code" class="qr-small">
+    </div>
 </header>
+<div id="qr-modal" class="qr-modal">
+  <div class="qr-modal-content">
+    <span id="qr-close" class="qr-close">&times;</span>
+    <img src="assets/images/QR-Code.png" alt="Full QR Code" id="qr-full-image">
+  </div>
+</div>
 
   <main>
 
@@ -75,7 +83,9 @@
 
     L.marker([51.2301671, 4.4161295], { icon: icon }).addTo(map)
       .openPopup();
+    L.marker([51.2303, 4.4142], { icon: icon }).addTo(map)
+      .openPopup();
   </script>
-
+<script src="js/script.js" defer></script>
 </body>
 </html>

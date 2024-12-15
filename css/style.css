@@ -14,6 +14,7 @@ body {
   min-height: 100vh;
 }
 
+
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Montserrat', sans-serif;
@@ -205,6 +206,73 @@ button, .add-to-cart, .wishlist-button {
 button:hover, .add-to-cart:hover, .wishlist-button:hover {
   background-color: #00838F; 
 }
+/* cart */
+.cart-sidebar {
+  background-color: #E0F7FA; 
+  border: 1px solid #B0BEC5; 
+  border-radius: 8px;
+  padding: 1rem;
+  top: 10px; 
+  max-height: 90vh; 
+  overflow-y: auto; 
+}
+
+.cart-sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #00838F;
+  text-align: center;
+}
+
+#cart-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#cart-items li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+#total-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+#checkout-button {
+  background-color: #00ACC1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+#checkout-button:hover {
+  background-color: #00838F;
+}
+
+.cart-sidebar.highlight {
+  animation: cart-highlight 0.5s ease;
+}
+
+@keyframes cart-highlight {
+  0% {
+    box-shadow: 0 0 15px #00ACC1;
+  }
+  100% {
+    box-shadow: 0 0 0 transparent;
+  }
+}
 
 /* About Me Section */
 .about-me {
@@ -372,6 +440,32 @@ button.add-to-wishlist.wishlisted {
   color: white;
 }
 
+.copyright {
+  color: #ff69b4; 
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.copyright:hover {
+  text-decoration: underline;
+}
+
+select {
+  font-size: 16px; 
+  padding: 5px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  background: #fff; 
+  color: #333; 
+  cursor: pointer; 
+}
+
+select option {
+  font-size: 16px; 
+  color: #333; 
+}
+
+
 @media (max-width: 768px) {
   .product-grid .product-card {
     width: 100%;
@@ -390,8 +484,6 @@ button.add-to-wishlist.wishlisted {
     background-attachment: scroll;
   }
 }
-
-
 
 /* Product Detail Page */
 .product-detail {
@@ -437,8 +529,20 @@ button.add-to-wishlist.wishlisted {
   gap: 10px;
 }
 
+#review-button{
+  margin-top: 20px;
+  text-align: center;
+}
+
 h3{
-  margin: 10px
+  margin: 10px;
+  text-align: center;
+}
+
+.price{
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
 }
 
 /* Forms */
@@ -481,6 +585,7 @@ input:focus, textarea:focus {
 
 .contact-form button{
   margin-top: 15px;
+  text-align: center;
 }
 
 /* Map Section */
@@ -506,7 +611,7 @@ footer {
   padding: 1rem;
 }
 
-/* Customer Section */
+/* Klanten */
 .customer-section {
   padding: 2rem;
 }
@@ -556,6 +661,52 @@ footer {
   font-size: 0.9rem;
 }
 
+/* Notification styles */
+#notification-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  background-color: #00838F;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  animation: slide-in 0.3s ease;
+}
+
+.notification img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.notification p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@keyframes slide-in {
+  from {
+      transform: translateX(100%);
+      opacity: 0;
+  }
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -594,5 +745,71 @@ footer {
 
   .contact-form {
     padding: 1rem;
+  }
+}
+
+
+/* Bookmark style - edge of the header */
+.bookmark-qr {
+  position: absolute; 
+  top: 0; 
+  right: 10px; 
+  width: 50px;
+  height: 120px;
+  background: #00838F;
+  border-radius: 0 0 10px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 10;
+}
+
+
+.qr-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-modal-content {
+  position: relative;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.qr-modal-content img {
+  width: 300px; 
+  height: 300px;
+}
+
+.qr-close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+
+.qr-close:hover {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .bookmark-qr {
+    display: none;
   }
 }
